@@ -6,6 +6,110 @@
 call quickui#menu#reset()
 
 " ============================================================================
+" Helper Functions (must be defined before menus)
+" ============================================================================
+
+" Show recent sessions submenu with grouping by project
+function! QuickUI_OpenRecentSessions()
+    " Get all session files using Lua
+    let session_files = luaeval("vim.fn.glob(vim.fn.stdpath('data') .. '/possession/*.json', 0, 1)")
+    
+    if empty(session_files)
+        echo "No sessions found"
+        return
+    endif
+    
+    " Build list of sessions with metadata
+    let sessions = []
+    for filepath in session_files
+        " Get file modification time and session name
+        let mtime = getftime(filepath)
+        let basename = fnamemodify(filepath, ':t:r')
+        
+        " Decode URL-encoded session name (possession uses URL encoding)
+        let session_name = substitute(basename, '%2F', '/', 'g')
+        let session_name = substitute(session_name, '%7E', '~', 'g')
+        let session_name = substitute(session_name, '%3A', ':', 'g')
+        
+        " Try to read JSON to get working directory
+        try
+            let json_content = join(readfile(filepath), "\n")
+            let session_data = json_decode(json_content)
+            let cwd = get(session_data, 'cwd', 'Unknown')
+        catch
+            let cwd = 'Unknown'
+        endtry
+        
+        call add(sessions, {'name': basename, 'display': session_name, 'cwd': cwd, 'mtime': mtime})
+    endfor
+    
+    " Sort by modification time (newest first)
+    call sort(sessions, {a, b -> b.mtime - a.mtime})
+    
+    " Take only top 5
+    let sessions = sessions[0:4]
+    
+    " Group by project/directory
+    let grouped = {}
+    for session in sessions
+        let cwd = session.cwd
+        if !has_key(grouped, cwd)
+            let grouped[cwd] = []
+        endif
+        call add(grouped[cwd], session)
+    endfor
+    
+    " Build menu content
+    let content = []
+    for cwd in sort(keys(grouped))
+        " Add directory header (as separator with text)
+        if len(content) > 0
+            call add(content, ['--', ''])
+        endif
+        call add(content, ['📁 ' . cwd, '', 'Project directory'])
+        
+        " Add sessions under this directory
+        for session in grouped[cwd]
+            " Simplify display name
+            let display_text = session.display
+            
+            " If session name looks like a path (contains slashes)
+            if display_text =~ '/'
+                 " Check if it matches the CWD (default auto-session)
+                 " Normalize paths for comparison (expand ~ to full path)
+                 let expanded_session = fnamemodify(display_text, ':p')
+                 let expanded_cwd = fnamemodify(cwd, ':p')
+                 
+                 " Remove trailing slashes
+                 let expanded_session = substitute(expanded_session, '/$', '', '')
+                 let expanded_cwd = substitute(expanded_cwd, '/$', '', '')
+                 
+                 if expanded_session ==# expanded_cwd
+                     let display_text = '(auto-saved)' 
+                 else
+                     " Show just the filename part for other path-based sessions
+                     let display_text = fnamemodify(display_text, ':t')
+                 endif
+            endif
+
+            let display_name = '  ' . display_text
+            
+            " Use decoded name for the command
+            let cmd = 'SLoad ' . session.display
+            let help = 'Load session: ' . session.display
+            call add(content, [display_name, cmd, help])
+        endfor
+    endfor
+    
+    if empty(content)
+        echo "No recent sessions found"
+        return
+    endif
+    
+    call quickui#context#open(content, {})
+endfunction
+
+" ============================================================================
 " File Menu
 " ============================================================================
 call quickui#menu#install('&File', [
@@ -14,6 +118,9 @@ call quickui#menu#install('&File', [
     \ [ 'Open in &Project', 'Telescope find_files', 'Open file in project' ],
     \ [ '&Save', 'write', 'Save current file' ],
     \ [ 'Save &As', 'call feedkeys(":saveas ")', 'Save file as' ],
+    \ [ '--', ],
+    \ [ 'Save Se&ssion', 'call feedkeys(":SSave ")', 'Save current session' ],
+    \ [ 'Recent Session&s', 'call QuickUI_OpenRecentSessions()', 'Load a recent session' ],
     \ [ '--', ],
     \ [ '&Recent Files', 'Telescope oldfiles', 'Open recent files' ],
     \ [ '&Close', 'close', 'Close current window' ],
@@ -196,6 +303,12 @@ function! s:open_edit_search()
         \ ]
     call quickui#context#open(content, {})
 endfunction
+
+" ============================================================================
+" Reload Command
+" ============================================================================
+" Command to reload the entire quickui configuration
+command! QuickUIReload call quickui#menu#reset() | source ~/.config/nvim/plugin/quickui_config.vim | echo "QuickUI config reloaded"
 
 " ============================================================================
 " Keybindings
