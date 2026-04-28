@@ -1,0 +1,75 @@
+# System Files
+.DS_Store
+*.log
+*.swp
+*.swo
+*~
+
+# Vim/Neovim Temporary Files
+*.un~
+*.tmp
+*.temp
+Session.vim
+
+# NvChad Specific
+lazy-lock.json
+plugin/packer_compiled.lua
+luac.out
+
+# OS Files
+Thumbs.db
+Desktop.ini
+
+# Backup Files
+*.bak
+*.backup
+
+# Cache Directories
+cache/
+logs/
+tmp/
+
+# Node (for if you have any node-related plugins)
+node_modules/
+package-lock.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.inst
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Compiled Lua
+*.luac
+
+# Test Coverage
+coverage/
+.nyc_output/
+
+# Miscellaneous
+*.tar.gz
+*.zip
+*.tar
+*.zip

@@ -1,0 +1,272 @@
+" vim-quickui Menu Configuration
+" Place this file in: ~/.config/nvim/plugin/quickui_config.vim
+" It will be automatically sourced by the plugin config function
+
+" Clear any existing menus
+call quickui#menu#reset()
+
+" ============================================================================
+" File Menu
+" ============================================================================
+call quickui#menu#install('&File', [
+    \ [ '&New File', 'enew', 'Create a new file' ],
+    \ [ '&Open', 'RnvimrToggle', 'Browse and open file anywhere (Ranger)' ],
+    \ [ 'Open in &Project', 'Telescope find_files', 'Open file in project' ],
+    \ [ '&Save', 'write', 'Save current file' ],
+    \ [ 'Save &As', 'call feedkeys(":saveas ")', 'Save file as' ],
+    \ [ '--', ],
+    \ [ '&Recent Files', 'Telescope oldfiles', 'Open recent files' ],
+    \ [ '&Close', 'close', 'Close current window' ],
+    \ [ '--', ],
+    \ [ '&Quit', 'quit', 'Quit vim' ],
+    \ ])
+
+" ============================================================================
+" Edit Menu
+" ============================================================================
+call quickui#menu#install('&Edit', [
+    \ [ '&Undo', 'undo', 'Undo last change' ],
+    \ [ '&Redo', 'redo', 'Redo last change' ],
+    \ [ '--', ],
+    \ [ 'Cu&t', '"+x', 'Cut to clipboard' ],
+    \ [ '&Copy', '"+y', 'Copy to clipboard' ],
+    \ [ '&Paste', '"+p', 'Paste from clipboard' ],
+    \ [ '--', ],
+    \ [ '&Find', 'Telescope live_grep', 'Find in files' ],
+    \ [ 'Find and &Replace', 'call feedkeys(":%s/")', 'Find and replace' ],
+    \ [ '--', ],
+    \ [ '&File Operations', 'call <SID>open_edit_fileops()', 'File encoding, format, etc.' ],
+    \ [ '&Search/Replace', 'call <SID>open_edit_search()', 'Advanced search and replace' ],
+    \ ])
+
+" ============================================================================
+" View Menu
+" ============================================================================
+call quickui#menu#install('&View', [
+    \ [ '&File Explorer', 'NvimTreeToggle', 'Toggle file explorer' ],
+    \ [ '&Buffers', 'Telescope buffers', 'List buffers' ],
+    \ [ '&Symbols', 'Telescope lsp_document_symbols', 'Show document symbols' ],
+    \ [ '--', ],
+    \ [ '&Diagnostics', 'Telescope diagnostics', 'Show diagnostics' ],
+    \ [ '&Quickfix', 'copen', 'Open quickfix window' ],
+    \ ])
+
+" ============================================================================
+" Git Menu
+" ============================================================================
+call quickui#menu#install('&Git', [
+    \ [ '&Status', 'Telescope git_status', 'Git status' ],
+    \ [ '&Commits', 'Telescope git_commits', 'Git commits' ],
+    \ [ '&Branches', 'Telescope git_branches', 'Git branches' ],
+    \ [ '--', ],
+    \ [ '&Diff', 'Gitsigns diffthis', 'Show diff' ],
+    \ [ '&Blame', 'Gitsigns blame_line', 'Show blame' ],
+    \ ])
+
+" ============================================================================
+" Tools Menu
+" ============================================================================
+call quickui#menu#install('&Tools', [
+    \ [ '&Terminal', 'terminal', 'Open terminal' ],
+    \ [ '&Lazy', 'Lazy', 'Plugin manager' ],
+    \ [ '&Mason', 'Mason', 'LSP installer' ],
+    \ [ '--', ],
+    \ [ '&Commands', 'Telescope commands', 'Show commands' ],
+    \ [ '&Keymaps', 'Telescope keymaps', 'Show keymaps' ],
+    \ [ '&Help', 'Telescope help_tags', 'Search help' ],
+    \ ])
+
+" ============================================================================
+" Window Menu
+" ============================================================================
+call quickui#menu#install('&Window', [
+    \ [ 'Split &Horizontal', 'split', 'Split window horizontally' ],
+    \ [ 'Split &Vertical', 'vsplit', 'Split window vertically' ],
+    \ [ '--', ],
+    \ [ 'Close &Other', 'only', 'Close all other windows' ],
+    \ [ '&Equalize', '<C-w>=', 'Equalize window sizes' ],
+    \ [ 'Ma&ximize', '<C-w>_<C-w>|', 'Maximize current window' ],
+    \ [ '--', ],
+    \ [ 'Rotate &Up', '<C-w>R', 'Rotate windows upward' ],
+    \ [ 'Rotate &Down', '<C-w>r', 'Rotate windows downward' ],
+    \ ])
+
+" ============================================================================
+" Marks Menu
+" ============================================================================
+call quickui#menu#install('&Marks', [
+    \ [ '&Set Mark', 'call feedkeys("m")', 'Set a mark' ],
+    \ [ '&View Marks', 'marks', 'View all marks' ],
+    \ [ '&Clear Mark', 'call feedkeys(":delm ")', 'Clear a mark' ],
+    \ ])
+
+" ============================================================================
+" Jumps Menu
+" ============================================================================
+call quickui#menu#install('&Jumps', [
+    \ [ '&Jump to Last Edit', "normal! '.", 'Jump to last edit position' ],
+    \ [ '&Jump to Last Pos', "normal! ''", 'Jump to last position' ],
+    \ ])
+
+
+" ============================================================================
+" Spell Menu
+" ============================================================================
+call quickui#menu#install('&Spell', [
+    \ [ '&Toggle Spell', 'set spell!', 'Toggle spell checking' ],
+    \ [ '--', ],
+    \ [ '&Next Error', ']s', 'Next spelling error' ],
+    \ [ '&Previous Error', '[s', 'Previous spelling error' ],
+    \ [ '--', ],
+    \ [ '&Add Word', 'zg', 'Add word to dictionary' ],
+    \ [ '&Mark Wrong', 'zw', 'Mark word as wrong' ],
+    \ ])
+
+" ============================================================================
+" History Menu
+" ============================================================================
+call quickui#menu#install('&History', [
+    \ [ '&Command History', 'history', 'View command history' ],
+    \ [ '&Search History', 'history /', 'View search history' ],
+    \ [ '--', ],
+    \ [ '&Clear History', 'history clear', 'Clear command history' ],
+    \ ])
+
+" ============================================================================
+" Options Menu
+" ============================================================================
+call quickui#menu#install('&Options', [
+    \ [ '&Line Numbers', 'set number!', 'Toggle line numbers' ],
+    \ [ '&Relative Numbers', 'set relativenumber!', 'Toggle relative numbers' ],
+    \ [ '--', ],
+    \ [ '&List Chars', 'set list!', 'Toggle invisible chars' ],
+    \ [ '&Wrap', 'set wrap!', 'Toggle line wrap' ],
+    \ [ '&Cursor Line', 'set cursorline!', 'Toggle cursor line' ],
+    \ ])
+
+" ============================================================================
+" Help Menu
+" ============================================================================
+call quickui#menu#install('&Help', [
+    \ [ '&Vim Help', 'help', 'Open vim help' ],
+    \ [ '&About', 'version', 'Show version info' ],
+    \ [ '--', ],
+    \ [ '&View Mappings', ':Telescope keymaps', 'View all key mappings' ],
+    \ [ '&View Settings', ':set all', 'View all settings' ],
+    \ ])
+
+" ============================================================================
+" Edit -> File Operations Submenu
+" ============================================================================
+function! s:open_edit_fileops()
+    let content = [
+        \ [ '&File Info', '<C-g>', 'Show file information' ],
+        \ [ 'File &Path', '1<C-g>', 'Show full file path' ],
+        \ [ '--', ],
+        \ [ '&Word Count', 'g<C-g>', 'Count words in file' ],
+        \ [ '--', ],
+        \ [ 'Set &Encoding', 'call feedkeys(":set fileencoding=")', 'Change file encoding' ],
+        \ [ 'Set &Format', 'call feedkeys(":set fileformat=")', 'Change line endings' ],
+        \ [ 'View &Format', 'set fileformat?', 'View current format' ],
+        \ ]
+    call quickui#context#open(content, {})
+endfunction
+
+" ============================================================================
+" Edit -> Search/Replace Submenu
+" ============================================================================
+function! s:open_edit_search()
+    let content = [
+        \ [ '&Search', 'call feedkeys("/")', 'Search forward' ],
+        \ [ 'Search &Backward', 'call feedkeys("?")', 'Search backward' ],
+        \ [ '--', ],
+        \ [ '&Next Match', 'n', 'Next search match' ],
+        \ [ '&Previous Match', 'N', 'Previous search match' ],
+        \ [ '--', ],
+        \ [ '&Replace', 'call feedkeys(":%s/")', 'Replace in file' ],
+        \ [ 'Replace &Confirm', 'call feedkeys(":%s//gc")', 'Replace with confirmation' ],
+        \ [ 'Replace in &Selection', 'call feedkeys(":'<,'>s/")', 'Replace in visual selection' ],
+        \ ]
+    call quickui#context#open(content, {})
+endfunction
+
+" ============================================================================
+" Keybindings
+" ============================================================================
+
+" Open menu bar with F10 or <leader>m
+nnoremap <silent> <F10> :call quickui#menu#open()<CR>
+nnoremap <silent> <leader>m :call quickui#menu#open()<CR>
+
+" Context menu for LSP actions (triggered with <leader>k)
+nnoremap <silent> <leader>k :call <SID>show_context_menu()<CR>
+
+" ============================================================================
+" Context Menu Function
+" ============================================================================
+function! s:show_context_menu()
+    " Define context menu items
+    let content = [
+        \ [ 'Go to &Definition', 'lua vim.lsp.buf.definition()', 'Go to definition' ],
+        \ [ 'Go to &References', 'lua vim.lsp.buf.references()', 'Find references' ],
+        \ [ 'Go to &Implementation', 'lua vim.lsp.buf.implementation()', 'Go to implementation' ],
+        \ [ '--', ],
+        \ [ '&Hover', 'lua vim.lsp.buf.hover()', 'Show hover info' ],
+        \ [ '&Rename', 'lua vim.lsp.buf.rename()', 'Rename symbol' ],
+        \ [ '&Code Action', 'lua vim.lsp.buf.code_action()', 'Show code actions' ],
+        \ [ '--', ],
+        \ [ '&Format', 'lua vim.lsp.buf.format()', 'Format code' ],
+        \ ]
+    
+    " Open context menu at current line
+    call quickui#context#open(content, {'index': line('.')})
+endfunction
+
+" ============================================================================
+" Confirmation Message
+" ============================================================================
+echo "vim-quickui configured! Press F10 or <leader>m to open menu"
+
+" ============================================================================
+" CUSTOMIZATION GUIDE
+" ============================================================================
+"
+" Menu Item Format:
+" [ 'Display &Name', 'command', 'description' ]
+"
+" - Display Name: Text shown in menu
+"   - Use & before a letter to create a hotkey (e.g., &File = Alt+F)
+" - Command: Any Vim/Neovim command to execute
+"   - Can be Ex commands: 'write', 'quit', etc.
+"   - Can be Lua commands: 'lua vim.lsp.buf.format()'
+"   - Can be plugin commands: 'Telescope find_files'
+" - Description: Shows in command line when hovering
+"
+" Separator:
+" [ '--', ]
+"
+" Example - Adding a Custom Menu:
+"
+" call quickui#menu#install('&Custom', [
+"     \ [ '&Hello World', 'echo "Hello!"', 'Print hello' ],
+"     \ [ '&Run Script', '!./script.sh', 'Execute script' ],
+"     \ [ '--', ],
+"     \ [ '&Lua Function', 'lua print("From Lua")', 'Call Lua' ],
+"     \ ])
+"
+" Example - File Type Specific Context Menu:
+"
+" function! s:show_python_menu()
+"     let content = [
+"         \ [ 'Run &Python', '!python %', 'Run current file' ],
+"         \ [ 'Run &Tests', '!pytest', 'Run pytest' ],
+"         \ [ 'Format with &Black', '!black %', 'Format with black' ],
+"         \ ]
+"     call quickui#context#open(content, {'index': line('.')})
+" endfunction
+"
+" autocmd FileType python nnoremap <buffer> <leader>k :call <SID>show_python_menu()<CR>
+"
+" ============================================================================
+
+
