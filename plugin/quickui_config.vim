@@ -114,7 +114,7 @@ endfunction
 " ============================================================================
 call quickui#menu#install('&File', [
     \ [ '&New File', 'enew', 'Create a new file' ],
-    \ [ '&Open', 'RnvimrToggle', 'Browse and open file anywhere (Ranger)' ],
+    \ [ '&Open', 'Telescope find_files', 'Browse and open file (Telescope)' ],
     \ [ 'Open in &Project', 'Telescope find_files', 'Open file in project' ],
     \ [ '&Save', 'write', 'Save current file' ],
     \ [ 'Save &As', 'call feedkeys(":saveas ")', 'Save file as' ],

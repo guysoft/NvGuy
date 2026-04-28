@@ -27,35 +27,6 @@ return {
   -- },
 
   {
-    "NickvanDyke/opencode.nvim",
-    lazy = false,
-    dependencies = {
-      { "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = {} } },
-    },
-    config = function()
-      vim.g.opencode_opts = {}
-      vim.o.autoread = true
-
-      -- Create simple commands instead of keymaps
-      vim.api.nvim_create_user_command('Opencode', function()
-        require('opencode').toggle()
-      end, { desc = 'Toggle opencode terminal' })
-
-      vim.api.nvim_create_user_command('OpencodeAsk', function()
-        require('opencode').ask('@this: ', { submit = true })
-      end, { desc = 'Ask opencode about current selection/cursor' })
-
-      vim.api.nvim_create_user_command('OpencodeSelect', function()
-        require('opencode').select()
-      end, { desc = 'Select opencode action' })
-
-      vim.api.nvim_create_user_command('OpencodeAdd', function()
-        require('opencode').prompt('@this')
-      end, { desc = 'Add to opencode prompt' })
-    end,
-  },
-
-  {
     "jedrzejboczar/possession.nvim",
     lazy = false,
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -82,15 +53,6 @@ return {
       if telescope_ok then
         telescope.load_extension('possession')
       end
-    end,
-  },  {
-    "kevinhwang91/rnvimr",
-    cmd = "RnvimrToggle",
-    config = function()
-      vim.g.rnvimr_draw_border = 1
-      vim.g.rnvimr_pick_enable = 1
-      vim.g.rnvimr_bw_enable = 1
-      vim.g.rnvimr_ranger_cmd = { "ranger", "--cmd=set draw_borders both" }
     end,
   },
 
