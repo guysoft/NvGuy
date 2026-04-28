@@ -70,11 +70,17 @@ return {
     config = function()
       local plugin_file = vim.fn.stdpath('data') .. '/lazy/vim-quickui/plugin/quickui.vim'
       vim.cmd('source ' .. plugin_file)
-      
+
+      -- Source crush color scheme from NvGuy config (in case the fork doesn't include it)
+      local crush_file = vim.fn.stdpath('config') .. '/colors/quickui/crush.vim'
+      if vim.fn.filereadable(crush_file) == 1 then
+        vim.cmd('source ' .. crush_file)
+      end
+
       vim.defer_fn(function()
         if vim.fn.exists('g:quickui_version') == 1 then
           vim.notify("vim-quickui plugin loaded v" .. vim.g.quickui_version, vim.log.levels.INFO)
-          
+
           vim.defer_fn(function()
             pcall(vim.fn['quickui#menu#reset'])
             local config_file = vim.fn.stdpath('config') .. '/plugin/quickui_config.vim'
