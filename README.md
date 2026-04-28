@@ -302,20 +302,20 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🌟 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/nvguy&type=Date)](https://star-history.com/#yourusername/nvguy&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=guysoft/NvGuy&type=Date)](https://star-history.com/#guysoft/NvGuy&Date)
 
 ---
 
 ## 💬 Support
 
-- Create an [Issue](https://github.com/yourusername/nvguy/issues) for bug reports
-- Start a [Discussion](https://github.com/yourusername/nvguy/discussions) for questions
+- Create an [Issue](https://github.com/guysoft/NvGuy/issues) for bug reports
+- Start a [Discussion](https://github.com/guysoft/NvGuy/discussions) for questions
 
 ---
 
 <div align="center">
 
-**Made with ❤️ by [Your Name](https://github.com/yourusername)**
+**Made with ❤️ by [Guy Sheffer](https://github.com/guysoft)**
 
 If you like this project, please give it a ⭐!
 

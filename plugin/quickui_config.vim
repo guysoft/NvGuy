@@ -1,5 +1,5 @@
 " vim-quickui Menu Configuration
-" Place this file in: ~/.config/nvim/plugin/quickui_config.vim
+" Place this file in: <stdpath('config')>/plugin/quickui_config.vim
 " It will be automatically sourced by the plugin config function
 
 " Clear any existing menus
@@ -308,7 +308,7 @@ endfunction
 " Reload Command
 " ============================================================================
 " Command to reload the entire quickui configuration
-command! QuickUIReload call quickui#menu#reset() | source ~/.config/nvim/plugin/quickui_config.vim | echo "QuickUI config reloaded"
+command! QuickUIReload call quickui#menu#reset() | execute 'source ' . stdpath('config') . '/plugin/quickui_config.vim' | echo "QuickUI config reloaded"
 
 " ============================================================================
 " Keybindings

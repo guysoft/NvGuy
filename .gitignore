@@ -12,7 +12,6 @@
 Session.vim
 
 # NvChad Specific
-lazy-lock.json
 plugin/packer_compiled.lua
 luac.out
 
