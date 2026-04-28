@@ -93,6 +93,30 @@ return {
     end,
   },
 
+  {
+    "echasnovski/mini.map",
+    version = false,
+    lazy = false,
+    config = function()
+      local map = require "mini.map"
+      map.setup {
+        integrations = {
+          map.gen_integration.builtin_search(),
+          map.gen_integration.diagnostic(),
+        },
+        window = {
+          width = 10,
+          winblend = 50,
+        },
+      }
+      vim.api.nvim_create_autocmd("BufEnter", {
+        callback = function()
+          pcall(map.open)
+        end,
+      })
+    end,
+  },
+
   -- Gitsigns (git integration in buffer - like GitLens)
   {
     "lewis6991/gitsigns.nvim",
