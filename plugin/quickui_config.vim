@@ -55,12 +55,19 @@ call quickui#menu#install('&View', [
 " Git Menu
 " ============================================================================
 call quickui#menu#install('&Git', [
-    \ [ '&Status', 'Telescope git_status', 'Git status' ],
-    \ [ '&Commits', 'Telescope git_commits', 'Git commits' ],
-    \ [ '&Branches', 'Telescope git_branches', 'Git branches' ],
+    \ [ '&Neogit', 'Neogit', 'Open Neogit (magit-style interface)' ],
     \ [ '--', ],
-    \ [ '&Diff', 'Gitsigns diffthis', 'Show diff' ],
-    \ [ '&Blame', 'Gitsigns blame_line', 'Show blame' ],
+    \ [ '&Status', 'Telescope git_status', 'Git status (Telescope)' ],
+    \ [ 'Co&mmits', 'Telescope git_commits', 'Git commits (Telescope)' ],
+    \ [ '&Branches', 'Telescope git_branches', 'Git branches (Telescope)' ],
+    \ [ '--', ],
+    \ [ '&Diff', 'Gitsigns diffthis', 'Show diff for current file' ],
+    \ [ 'Bl&ame Line', 'lua require("gitsigns").blame_line{full=true}', 'Show blame for current line' ],
+    \ [ '&Toggle Line Blame', 'Gitsigns toggle_current_line_blame', 'Toggle inline blame (like GitLens)' ],
+    \ [ '--', ],
+    \ [ '&Preview Hunk', 'Gitsigns preview_hunk', 'Preview current hunk changes' ],
+    \ [ '&Reset Hunk', 'Gitsigns reset_hunk', 'Reset current hunk' ],
+    \ [ 'Stage &Hunk', 'Gitsigns stage_hunk', 'Stage current hunk' ],
     \ ])
 
 " ============================================================================

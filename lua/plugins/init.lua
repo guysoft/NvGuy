@@ -96,29 +96,13 @@ return {
 
 
   {
-    "skywind3000/vim-quickui",
+    "guysoft/vim-quickui",
     lazy = false,
     priority = 1000,
     init = function()
       vim.g.quickui_show_tip = 1
       vim.g.quickui_border_style = 2
       vim.g.quickui_color_scheme = 'crush'
-      
-      -- Apply Crush theme colors
-      vim.api.nvim_create_autocmd("ColorScheme", {
-        pattern = "*",
-        callback = function()
-          -- Menu colors
-          vim.api.nvim_set_hl(0, 'QuickUiMenu', { bg = '#2d2c35', fg = '#DFDBDD' })
-          vim.api.nvim_set_hl(0, 'QuickUiSelect', { bg = '#6B50FF', fg = '#F1EFEF', bold = true })
-          vim.api.nvim_set_hl(0, 'QuickUiTips', { bg = '#201F26', fg = '#858392' })
-          vim.api.nvim_set_hl(0, 'QuickUiBorder', { bg = '#2d2c35', fg = '#3A3943' })
-          vim.api.nvim_set_hl(0, 'QuickUiText', { bg = '#2d2c35', fg = '#BFBCC8' })
-        end,
-      })
-      
-      -- Trigger immediately for current colorscheme
-      vim.api.nvim_exec_autocmds("ColorScheme", {})
     end,
     config = function()
       local plugin_file = vim.fn.stdpath('data') .. '/lazy/vim-quickui/plugin/quickui.vim'
@@ -137,6 +121,77 @@ return {
           vim.notify("vim-quickui plugin file loaded but version not set", vim.log.levels.ERROR)
         end
       end, 50)
+    end,
+  },
+
+  -- Gitsigns (git integration in buffer - like GitLens)
+  {
+    "lewis6991/gitsigns.nvim",
+    event = "BufRead",
+    config = function()
+      require('gitsigns').setup({
+        signs = {
+          add = { text = "│" },
+          change = { text = "│" },
+          delete = { text = "_" },
+          topdelete = { text = "‾" },
+          changedelete = { text = "~" },
+          untracked = { text = "┆" },
+        },
+        current_line_blame = false, -- Toggle with :Gitsigns toggle_current_line_blame
+        current_line_blame_opts = {
+          virt_text = true,
+          virt_text_pos = 'eol',
+          delay = 500,
+        },
+        on_attach = function(bufnr)
+          local gs = package.loaded.gitsigns
+          
+          local function map(mode, l, r, opts)
+            opts = opts or {}
+            opts.buffer = bufnr
+            vim.keymap.set(mode, l, r, opts)
+          end
+
+          map('n', ']c', gs.next_hunk, { desc = "Next hunk" })
+          map('n', '[c', gs.prev_hunk, { desc = "Prev hunk" })
+          map('n', '<leader>hs', gs.stage_hunk, { desc = "Stage hunk" })
+          map('n', '<leader>hr', gs.reset_hunk, { desc = "Reset hunk" })
+          map('n', '<leader>hS', gs.stage_buffer, { desc = "Stage buffer" })
+          map('n', '<leader>hu', gs.undo_stage_hunk, { desc = "Undo stage" })
+          map('n', '<leader>hR', gs.reset_buffer, { desc = "Reset buffer" })
+          map('n', '<leader>hp', gs.preview_hunk, { desc = "Preview hunk" })
+          map('n', '<leader>hb', function() gs.blame_line{full=true} end, { desc = "Blame line (full)" })
+          map('n', '<leader>tb', gs.toggle_current_line_blame, { desc = "Toggle line blame" })
+          map('n', '<leader>hd', gs.diffthis, { desc = "Diff this" })
+          map('n', '<leader>hD', function() gs.diffthis('~') end, { desc = "Diff this ~" })
+        end
+      })
+    end,
+  },
+
+  -- Neogit (magit-style git interface)
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+    },
+    cmd = "Neogit",
+    keys = {
+      { "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
+    },
+    config = function()
+      require("neogit").setup({
+        integrations = {
+          diffview = true
+        },
+        signs = {
+          section = { ">", "v" },
+          item = { ">", "v" },
+          hunk = { "", "" },
+        },
+      })
     end,
   },
 }
