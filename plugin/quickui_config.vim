@@ -318,8 +318,8 @@ command! QuickUIReload call quickui#menu#reset() | source ~/.config/nvim/plugin/
 nnoremap <silent> <F10> :call quickui#menu#open()<CR>
 nnoremap <silent> <leader>m :call quickui#menu#open()<CR>
 
-" Context menu for LSP actions (triggered with <leader>k)
-nnoremap <silent> <leader>k :call <SID>show_context_menu()<CR>
+" Open Telescope keymaps with <leader>k
+nnoremap <silent> <leader>k :Telescope keymaps<CR>
 
 " ============================================================================
 " Context Menu Function
