@@ -1,326 +1,287 @@
-<div align="center">
-  <h1>🚀 nvguy - Neovim Distribution</h1>
-  <p>A modern, feature-rich Neovim configuration based on NvChad</p>
-  
-  [![Neovim](https://img.shields.io/badge/Neovim-0.9+-green.svg)](https://neovim.io/)
-  [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-  [![Stars](https://img.shields.io/github/stars/guysoft/nvguy.svg)](https://github.com/guysoft/nvguy/stargazers)
-</div>
+# NvGuy - Neovim Distribution
+
+A Neovim distribution based on NvChad with a full menu bar system
+
+[![Neovim](https://img.shields.io/badge/Neovim-0.9+-green.svg)](https://neovim.io/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/guysoft/NvGuy.svg)](https://github.com/guysoft/NvGuy/stargazers)
 
 ---
 
-## ✨ Features
+![QuickUI Menu Demo](screenshots/quickui-menu.gif)
 
-### 🎨 Visual
-- **Theme**: [Fluoromachine](https://github.com/maxmx03/fluoromachine.nvim) - A retro-futuristic color scheme
-- **Status Line**: Custom NvChad statusline with LSP, git, and diagnostic indicators
-- **Icons**: Full [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) support
-- **File Tree**: [Neo-tree](https://github.com/nvim-neo-tree/neo-tree.nvim) with enhanced navigation
-- **Syntax Highlighting**: Treesitter-powered highlighting for 100+ languages
-- **Indentation**: Visual indentation guides with [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim)
+## What is this?
 
-### 🛠️ Development
-- **LSP**: Native LSP with [mason.nvim](https://github.com/williamboman/mason.nvim) for language servers
-- **Auto-completion**: [NvChad nvim-cmp](https://github.com/NvChad/nvim-cmp) with snippet support
-- **Code Formatting**: [Conform.nvim](https://github.com/stevearc/conform.nvim) for code formatting
-- **Linting**: Integrated linting for multiple languages
-- **Git Integration**: [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) for git status in buffer
-- **Git Client**: [Neogit](https://github.com/NeogitOrg/neogit) for git operations
-- **File Explorer**: Enhanced Neo-tree
-- **Terminal**: [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim) for integrated terminal
-- **Sessions**: [Persistence.nvim](https://github.com/olimorris/persisted.nvim) for session management
+NvGuy adds a traditional **menu bar** to Neovim via [vim-quickui](https://github.com/guysoft/vim-quickui), sitting on top of [NvChad](https://github.com/NvChad/NvChad). Press `F10` or `<leader>m` and get a full File/Edit/View/Git/Tools menu — no need to memorize every keybinding.
 
-### 🚀 Productivity
-- **Fuzzy Finder**: [Telescope](https://github.com/nvim-telescope/telescope.nvim) with multiple picker extensions
-- **Project Management**: [project.nvim](https://github.com/ahmedkhalf/project.nvim)
-- **Quick UI**: [Quick-UI.nvim](https://github.com/skywind3000/quickui.nvim) for popup interfaces
-- **Color Picker**: [Pickachu.nvim](https://github.com/lpoto/pickachu.nvim)
-- **Media Viewer**: [Image.nvim](https://github.com/3rd/image.nvim)
-- **Dashboard**: Custom NvChad dashboard
-- **Window Management**: [nvim-window-picker](https://github.com/s1n7ax/nvim-window-picker)
+## Features
 
-### 📦 Custom Plugins
-- **BetterQuickfix**: Enhanced quickfix list with [nvim-bqf](https://github.com/kevinhwang91/nvim-bqf)
-- **Colorizer**: [nvim-colorizer.lua](https://github.com/norcalli/nvim-colorizer.lua) for hex colors
-- **Scrollview**: [nvim-scrollview](https://github.com/dstein64/nvim-scrollview) for minimap
-- **Cheatsheet**: Interactive cheatsheet
+- **Full menu bar** with 13 menus covering file ops, editing, git, diagnostics, sessions, tools, window management, and more
+- **Right-click style context menu** for LSP actions (go to definition, references, rename, code actions)
+- **Git integration** via Gitsigns (inline blame, hunk operations) and Neogit (magit-style UI)
+- **Code minimap** sidebar via mini.map
+- **Session management** with auto-save per directory via possession.nvim
+- **Code formatting** via conform.nvim
+- **LSP support** via nvim-lspconfig (language servers managed by Mason from NvChad)
+- **Everything from NvChad**: Telescope, Treesitter, nvim-cmp, Mason, nvim-tree, and more
 
 ---
 
-## 📸 Screenshots
+## Menu Map
 
-### Dashboard
-*A clean dashboard greets you when opening Neovim*
+Press `F10` or `<leader>m` to open the menu bar. Here's what's inside:
 
-### LSP in Action
-*Syntax highlighting, diagnostics, and hover information*
+```
+ File │ Edit │ View │ Git │ Tools │ Window │ Marks │ Jumps │ Spell │ History │ Options │ Help
+```
 
-### Git Integration
-*See your changes, blame, and preview changes*
+### File — New, Open, Save, Sessions, Recent Files, Quit
 
-### Telescope
-*Fuzzy find files, grep, and navigate your project*
+| Item | Command |
+|------|---------|
+| New File | `enew` |
+| Open | `Telescope find_files` |
+| Save / Save As | `write` / `:saveas` |
+| Save Session | `:SSave` prompt |
+| Recent Sessions | Dynamic submenu (top 5 by project) |
+| Recent Files | `Telescope oldfiles` |
+| Close / Quit | `close` / `quit` |
 
-### File Explorer
-*Navigate your file system with ease*
+### Edit — Undo, Redo, Clipboard, Find, Replace, File Operations
+
+| Item | Command |
+|------|---------|
+| Undo / Redo | `undo` / `redo` |
+| Cut / Copy / Paste | System clipboard (`"+x`, `"+y`, `"+p`) |
+| Find | `Telescope live_grep` |
+| Find and Replace | `:%s/` prompt |
+| File Operations | Submenu: file info, path, word count, encoding, format |
+| Search/Replace | Submenu: search, next/prev match, replace, replace in selection |
+
+### View — File Explorer, Buffers, Symbols, Diagnostics, Quickfix
+
+| Item | Command |
+|------|---------|
+| File Explorer | `NvimTreeToggle` |
+| Buffers | `Telescope buffers` |
+| Symbols | `Telescope lsp_document_symbols` |
+| Diagnostics | `Telescope diagnostics` |
+| Quickfix | `copen` |
+
+### Git — Neogit, Telescope git pickers, Gitsigns hunk operations
+
+| Item | Command |
+|------|---------|
+| Neogit | `Neogit` (magit-style interface) |
+| Status / Commits / Branches | `Telescope git_*` |
+| Diff | `Gitsigns diffthis` |
+| Blame Line | `gitsigns.blame_line` (full) |
+| Toggle Line Blame | `Gitsigns toggle_current_line_blame` |
+| Preview / Reset / Stage Hunk | `Gitsigns preview_hunk` / `reset_hunk` / `stage_hunk` |
+
+### Tools — Terminal, Lazy, Mason, Commands, Keymaps, Help
+
+| Item | Command |
+|------|---------|
+| Terminal | `terminal` |
+| Lazy | `Lazy` (plugin manager) |
+| Mason | `Mason` (LSP installer) |
+| Commands / Keymaps / Help | `Telescope commands` / `keymaps` / `help_tags` |
+
+### Window — Split, Close, Equalize, Maximize, Rotate
+
+| Item | Command |
+|------|---------|
+| Split Horizontal / Vertical | `split` / `vsplit` |
+| Close Other / Equalize / Maximize | `only` / `<C-w>=` / `<C-w>_<C-w>\|` |
+| Rotate Up / Down | `<C-w>R` / `<C-w>r` |
+
+### Marks, Jumps, Spell, History, Options, Help
+
+| Menu | Highlights |
+|------|-----------|
+| **Marks** | Set, view, clear marks |
+| **Jumps** | Jump to last edit, last position |
+| **Spell** | Toggle spell check, next/prev error, add/mark words |
+| **History** | Command and search history |
+| **Options** | Toggle line numbers, relative numbers, list chars, wrap, cursor line |
+| **Help** | Vim help, version, view mappings and settings |
+
+### Context Menu
+
+LSP context menu (mapped to a key or callable from vimscript):
+
+```
+ Go to Definition
+ Go to References
+ Go to Implementation
+ ─────────────────
+ Hover
+ Rename
+ Code Action
+ ─────────────────
+ Format
+```
 
 ---
 
-## 🚀 Installation
+## Plugins
+
+### Configured in this distribution
+
+| Plugin | Purpose |
+|--------|---------|
+| [guysoft/vim-quickui](https://github.com/guysoft/vim-quickui) | Menu bar and context menus (fork of skywind3000/vim-quickui) |
+| [lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) | Git signs in gutter, inline blame, hunk operations |
+| [NeogitOrg/neogit](https://github.com/NeogitOrg/neogit) | Magit-style git interface |
+| [echasnovski/mini.map](https://github.com/echasnovski/mini.map) | Code minimap sidebar |
+| [jedrzejboczar/possession.nvim](https://github.com/jedrzejboczar/possession.nvim) | Session management (auto-save per directory) |
+| [stevearc/conform.nvim](https://github.com/stevearc/conform.nvim) | Code formatting |
+| [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP configuration |
+
+### Dependencies (pulled automatically)
+
+| Plugin | Required by |
+|--------|-------------|
+| [nvim-lua/plenary.nvim](https://github.com/nvim-lua/plenary.nvim) | possession.nvim, neogit |
+| [sindrets/diffview.nvim](https://github.com/sindrets/diffview.nvim) | neogit |
+
+### Provided by NvChad base
+
+Telescope, Treesitter, nvim-cmp, Mason, nvim-tree, nvim-web-devicons, indent-blankline, and more. See the [NvChad docs](https://nvchad.com/) for the full list.
+
+---
+
+## Installation
 
 ### Prerequisites
 
 - **Neovim** >= 0.9.0
-- **Git** >= 2.19.0 (for partial clones)
-- **Nerd Font** (Optional: for icons)
+- **Git** >= 2.19.0
+- **Nerd Font** (optional, for icons)
 - **C Compiler** (for treesitter)
 
-### Quick Install
+### Install
 
-1. **Backup your current Neovim config:**
+1. Backup your current config:
 ```bash
 mv ~/.config/nvim ~/.config/nvim.backup
 ```
 
-2. **Clone the distribution:**
+2. Clone:
 ```bash
-git clone --depth 1 https://github.com/guysoft/nvguy.git ~/.config/nvim
+git clone https://github.com/guysoft/NvGuy.git ~/.config/nvim
 ```
 
-3. **Run Neovim and let it install plugins:**
+3. Open Neovim and let it install plugins:
 ```bash
 nvim
 ```
 
-4. **Install language servers:**
+4. Install language servers:
 ```
 :MasonInstallAll
 ```
 
-### Automated Install
+---
 
-For a fully automated installation including prerequisites:
+## Key Bindings
 
-```bash
-wget -O- https://raw.githubusercontent.com/guysoft/nvguy/main/install.sh | bash
-```
+### QuickUI
 
-Or download and run:
+| Key | Action |
+|-----|--------|
+| `F10` or `<leader>m` | Open menu bar |
+| `<leader>k` | Telescope keymaps (discover all bindings) |
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/guysoft/nvguy/main/install.sh -o install.sh
-chmod +x install.sh
-./install.sh
-```
+### General
+
+| Key | Action |
+|-----|--------|
+| `;` | Enter command mode |
+| `jk` (insert mode) | Escape |
+
+All other keybindings come from NvChad defaults. Press `<leader>k` or open **Tools > Keymaps** from the menu to browse them all.
 
 ---
 
-## ⚙️ Configuration
+## Customization
 
-### Customizing the Distribution
+| What | Where |
+|------|-------|
+| Add plugins | `lua/plugins/init.lua` |
+| Change keymaps | `lua/mappings.lua` |
+| Change options | `lua/options.lua` |
+| Configure LSP | `lua/configs/lspconfig.lua` |
+| Edit menus | `plugin/quickui_config.vim` |
+| QuickUI color scheme | `colors/quickui/crush.vim` |
 
-The configuration is modular and easy to customize:
-
-1. **Add new plugins** in `lua/plugins/init.lua`
-2. **Modify mappings** in `lua/mappings.lua`
-3. **Change options** in `lua/options.lua`
-4. **Customize LSP** in `lua/configs/lspconfig.lua`
-
-### Key Bindings
-
-#### General
-| Key | Action |
-|-----|--------|
-| `<C-n>` | Toggle Neotree |
-| `<leader>ff` | Telescope find files |
-| `<leader>fg` | Telescope live grep |
-| `<leader>fb` | Telescope buffers |
-| `<leader>fh` | Telescope help tags |
-| `<leader>e` | Toggle Neotree |
-| `<leader>ff` | Telescope find files |
-| `<leader>fg` | Telescope live grep |
-| `<leader>fb` | Telescope buffers |
-| `<leader>fh` | Telescope help tags |
-| `<leader>fb` | Telescope file browser |
-| `<leader>fs` | Telescope search sessions |
-| `<leader>ft` | Telescope file types |
-| `<leader>fc` | Telescope colorschemes |
-| `<leader>fp` | Telescope projects |
-| `<leader>fk` | Telescope keymaps |
-| `<leader>fr` | Telescope resume |
-
-#### LSP
-| Key | Action |
-|-----|--------|
-| `gd` | Go to definition |
-| `gr` | Go to references |
-| `gi` | Go to implementation |
-| `K` | Hover information |
-| `<leader>ca` | Code actions |
-| `<leader>rn` | Rename symbol |
-| `<leader>f` | Format document |
-
-#### Git (Neogit)
-| Key | Action |
-|-----|--------|
-| `<leader>gg` | Open Neogit |
-| `<leader>gl` | Open lazygit |
-
-#### Terminal
-| Key | Action |
-|-----|--------|
-| `<C-\>` | Toggle terminal |
-| `<A-i>` | Floating terminal |
-| `<A-h>` | Terminal left |
-| `<A-v>` | Terminal down |
-
-#### Window Management
-| Key | Action |
-|-----|--------|
-| `<C-h>` | Navigate left |
-| `<C-l>` | Navigate right |
-| `<C-k>` | Navigate up |
-| `<C-j>` | Navigate down |
-| `<C-Up>` | Resize up |
-| `<C-Down>` | Resize down |
-| `<C-Left>` | Resize left |
-| `<C-Right>` | Resize right |
-
-#### Quick UI
-| Key | Action |
-|-----|--------|
-| `<leader>u` | Open Quick UI |
-| `<leader>ck` | Color picker |
-
-#### Cheatsheet
-| Key | Action |
-|-----|--------|
-| `<leader>ch` | Cheatsheet |
-
-#### Sessions
-| Key | Action |
-|-----|--------|
-| `<leader>qa` | Save current session |
-| `<leader>qs` | View session list |
-
-#### Git (Gitsigns)
-| Key | Action |
-|-----|--------|
-| `<leader>ph` | Preview hunk |
-| `<leader>rh` | Reset hunk |
-| `<leader>gb` | Toggle blame |
-| `<leader>gd` | Toggle deleted |
+See the customization guide at the bottom of `plugin/quickui_config.vim` for how to add your own menus.
 
 ---
 
-## 📦 Plugin List
+## Troubleshooting
 
-### Core
-- [NvChad](https://github.com/NvChad/NvChad) - Base framework
-- [Lazy.nvim](https://github.com/folke/lazy.nvim) - Plugin manager
-- [Telescope](https://github.com/nvim-telescope/telescope.nvim) - Fuzzy finder
-
-### UI
-- [Fluoromachine](https://github.com/maxmx03/fluoromachine.nvim) - Theme
-- [Neo-tree](https://github.com/nvim-neo-tree/neo-tree.nvim) - File explorer
-- [NvChad/nvim-colorizer.lua](https://github.com/nvchad/nvim-colorizer.lua) - Color highlighter
-- [NvChad/nvim-dap-ui](https://github.com/nvchad/nvim-dap-ui) - DAP UI
-- [NvChad/nvim-notify](https://github.com/nvchad/nvim-notify) - Notifications
-
-### LSP & Completion
-- [Mason.nvim](https://github.com/williamboman/mason.nvim) - LSP manager
-- [NvChad/nvim-cmp](https://github.com/nvchad/nvim-cmp) - Autocompletion
-- [Conform.nvim](https://github.com/stevearc/conform.nvim) - Code formatting
-- [NvChad/nvim-lspconfig](https://github.com/nvchad/nvim-lspconfig) - LSP configs
-
-### Git
-- [Gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) - Git signs
-- [Neogit](https://github.com/NeogitOrg/neogit) - Git client
-- [Diffview.nvim](https://github.com/sindrets/diffview.nvim) - Diff viewer
-- [Git-blame.nvim](https://github.com/f-person/git-blame.nvim) - Git blamer
-
-### Git & Tmux Navigation
-- [Vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator) - Seamless navigation
-
-### Treesitter
-- [Nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) - Syntax highlighting
-- [Nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)
-- [Nvim-treesitter-refactor](https://github.com/nvim-treesitter/nvim-treesitter-refactor)
-
-### Terminal & Sessions
-- [Toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim) - Terminal
-- [Persistence.nvim](https://github.com/olimorris/persisted.nvim) - Sessions
-
-### Quick UI & Others
-- [Quick-UI.nvim](https://github.com/skywind3000/quickui.nvim) - Quick UI
-- [Pickachu.nvim](https://github.com/lpoto/pickachu.nvim) - Color picker
-- [Image.nvim](https://github.com/3rd/image.nvim) - Media viewer
-- [Nvim-scrollview](https://github.com/dstein64/nvim-scrollview) - Minimap
-- [Nvim-bqf](https://github.com/kevinhwang91/nvim-bqf) - Better quickfix
-
----
-
-## 🐛 Troubleshooting
-
-### Plugin Installation Fails
+**Plugins won't install:**
 ```bash
 rm -rf ~/.local/share/nvim/lazy
 nvim
 ```
 
-### LSP Not Working
-Run `:MasonInstallAll` to install all language servers
+**LSP not working:**
+```
+:MasonInstallAll
+```
 
-### Treesitter Errors
-```bash
+**Treesitter errors:**
+```
 :TSUninstall all
 :TSInstall all
 ```
 
-### Cache Issues
+**Cache issues:**
 ```bash
 rm -rf ~/.cache/nvim
 ```
 
 ---
 
-## 🤝 Contributing
+## AI-Driven Debugging (debug-reach)
+
+NvGuy includes a **Run/Debug menu** and full nvim-dap integration that enables AI-driven debugging. An AI coding agent can programmatically set breakpoints, launch debug sessions, and step through code — all via nvim's RPC interface.
+
+This feature requires all three repos working together:
+
+| Component | Repo | Role |
+|-----------|------|------|
+| **NvGuy** | [guysoft/NvGuy](https://github.com/guysoft/NvGuy) | Wires up nvim-dap, dap-ui, mason-nvim-dap, and the Run menu |
+| **vscodium.nvim** | [guysoft/vscodium.nvim](https://github.com/guysoft/vscodium.nvim) | Provides `debug-rpc.lua` module and the skill instructions |
+| **tmux-ide** | [guysoft/tmux-ide](https://github.com/guysoft/tmux-ide) | Exposes `NVIM_IDE_SOCK` so agents can discover nvim's RPC socket |
+
+The Run menu (accessible via F10 → Run) provides:
+- Start/Stop Debugging
+- Debug Last (re-run previous session)
+- Toggle Breakpoint, Clear All Breakpoints
+- Continue, Step Over, Step Into, Step Out
+- Toggle Debug UI
+
+---
+
+## License
+
+MIT License - see [LICENSE](LICENSE).
+
+---
+
+## Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create a feature branch (`git checkout -b feature/my-feature`)
+3. Commit your changes
+4. Push and open a Pull Request
 
 ---
 
-## 📄 License
+Made with ❤️ by [Guy Sheffer](https://github.com/guysoft)
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🌟 Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=guysoft/NvGuy&type=Date)](https://star-history.com/#guysoft/NvGuy&Date)
-
----
-
-## 💬 Support
-
-- Create an [Issue](https://github.com/guysoft/NvGuy/issues) for bug reports
-- Start a [Discussion](https://github.com/guysoft/NvGuy/discussions) for questions
-
----
-
-<div align="center">
-
-**Made with ❤️ by [Guy Sheffer](https://github.com/guysoft)**
-
-If you like this project, please give it a ⭐!
-
-</div>
-
----
-
-*This is a distribution based on [NvChad](https://github.com/NvChad/NvChad). Check out the original project for more information.*
+Based on [NvChad](https://github.com/NvChad/NvChad)
