@@ -3,6 +3,10 @@
 *.log
 *.swp
 *.swo
+
+# Local skill/script artifacts
+scripts/
+skills/
 *~
 
 # Vim/Neovim Temporary Files
