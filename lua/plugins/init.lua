@@ -188,41 +188,7 @@ return {
     end,
   },
 
-  -- Debug Adapter Protocol
-  {
-    "mfussenegger/nvim-dap",
-    lazy = false,
-  },
-
-  {
-    "rcarriga/nvim-dap-ui",
-    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
-    config = function()
-      require("dapui").setup()
-    end,
-  },
-
-  {
-    "jay-babu/mason-nvim-dap.nvim",
-    dependencies = { "williamboman/mason.nvim", "mfussenegger/nvim-dap" },
-    config = function()
-      require("mason-nvim-dap").setup({
-        ensure_installed = { "debugpy", "delve" },
-      })
-    end,
-  },
-
-  -- vscodium.nvim - VSCode-like Run/Debug
-  {
-    dir = "/Users/guyshe/workspace/ai/vscodium.nvim",
-    lazy = false,
-    dependencies = { "mfussenegger/nvim-dap", "rcarriga/nvim-dap-ui" },
-    config = function()
-      require("nvim-launch").setup({
-        tmux_pane = 1,
-        tmux_clear = true,
-        keymaps = true,
-      })
-    end,
-  },
+  -- Debug stack (nvim-dap + dap-ui + dap-python + virtual-text + vscodium.nvim
+  -- + mason-tool-installer for debugpy) lives in plugins/debug.lua so it can
+  -- be loaded with `{ import = "plugins.debug" }` from init.lua.
 }

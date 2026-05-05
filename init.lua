@@ -23,6 +23,7 @@ require("lazy").setup({
   },
 
   { import = "plugins" },
+  { import = "plugins.debug" },
 }, lazy_config)
 
 -- load theme
