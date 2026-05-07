@@ -2,6 +2,11 @@
 " Place this file in: <stdpath('config')>/plugin/quickui_config.vim
 " It will be automatically sourced by the plugin config function
 
+" Load guard — prevent double-sourcing (Neovim auto-loads plugin/ AND
+" init.lua sources this file explicitly for sequencing reasons).
+if exists('g:quickui_config_loaded') | finish | endif
+let g:quickui_config_loaded = 1
+
 " Clear any existing menus
 call quickui#menu#reset()
 
@@ -369,7 +374,8 @@ endfunction
 " ============================================================================
 " Confirmation Message
 " ============================================================================
-echo "vim-quickui configured! Press F10 or <leader>m to open menu"
+" Startup message removed — was causing duplicate output due to
+" double-sourcing (plugin/ autoload + explicit source in init.lua).
 
 " ============================================================================
 " CUSTOMIZATION GUIDE
