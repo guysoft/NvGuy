@@ -79,7 +79,7 @@ return {
 
       vim.defer_fn(function()
         if vim.fn.exists('g:quickui_version') == 1 then
-          vim.notify("vim-quickui plugin loaded v" .. vim.g.quickui_version, vim.log.levels.INFO)
+          -- version loaded silently; use :echo g:quickui_version to check
 
           vim.defer_fn(function()
             pcall(vim.fn['quickui#menu#reset'])
