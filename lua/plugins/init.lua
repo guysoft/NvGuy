@@ -83,6 +83,11 @@ return {
 
           vim.defer_fn(function()
             pcall(vim.fn['quickui#menu#reset'])
+            -- The config file has a load guard (g:quickui_config_loaded) to prevent
+            -- double-sourcing on startup. We need to unset it here because this
+            -- deferred re-source is intentional: it rebuilds the menus after
+            -- quickui#menu#reset() so leader+m works correctly.
+            vim.g.quickui_config_loaded = nil
             local config_file = vim.fn.stdpath('config') .. '/plugin/quickui_config.vim'
             vim.cmd('source ' .. config_file)
           end, 100)

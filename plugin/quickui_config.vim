@@ -2,8 +2,11 @@
 " Place this file in: <stdpath('config')>/plugin/quickui_config.vim
 " It will be automatically sourced by the plugin config function
 
-" Load guard — prevent double-sourcing (Neovim auto-loads plugin/ AND
-" init.lua sources this file explicitly for sequencing reasons).
+" Load guard — prevent double-sourcing on initial startup (Neovim
+" auto-loads plugin/ files). The deferred config function in init.lua
+" intentionally unsets g:quickui_config_loaded and re-sources this file
+" after quickui#menu#reset() so the menus are rebuilt correctly for
+" leader+m. See lua/plugins/init.lua for the re-source logic.
 if exists('g:quickui_config_loaded') | finish | endif
 let g:quickui_config_loaded = 1
 
