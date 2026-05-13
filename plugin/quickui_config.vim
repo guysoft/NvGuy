@@ -167,10 +167,32 @@ call quickui#menu#install('&View', [
     \ ])
 
 " ============================================================================
+" Helper: Open gitui or show install dialog
+" ============================================================================
+function! QuickUI_OpenGitui()
+    if executable('gitui')
+        Gitui
+    else
+        call quickui#textbox#open([
+            \ '  gitui is not installed.                        ',
+            \ '                                                 ',
+            \ '  Install it to use the Gitui integration:       ',
+            \ '                                                 ',
+            \ '    brew install gitui       (macOS)             ',
+            \ '    cargo install gitui      (Rust/cargo)        ',
+            \ '    pacman -S gitui          (Arch Linux)        ',
+            \ '                                                 ',
+            \ '  See: https://github.com/extrawurst/gitui       ',
+            \ ], {'title': ' gitui not found ', 'close': 'button'})
+    endif
+endfunction
+
+" ============================================================================
 " Git Menu
 " ============================================================================
 call quickui#menu#install('&Git', [
     \ [ '&Neogit', 'Neogit', 'Open Neogit (magit-style interface)' ],
+    \ [ 'Git&ui', 'call QuickUI_OpenGitui()', 'Open gitui TUI in floating window' ],
     \ [ '--', ],
     \ [ '&Status', 'Telescope git_status', 'Git status (Telescope)' ],
     \ [ 'Co&mmits', 'Telescope git_commits', 'Git commits (Telescope)' ],

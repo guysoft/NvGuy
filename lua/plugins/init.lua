@@ -193,6 +193,26 @@ return {
     end,
   },
 
+  -- gitui.nvim (gitui TUI in a floating window)
+  {
+    "aspeddro/gitui.nvim",
+    lazy = true,
+    cmd = "Gitui",
+    config = function()
+      require("gitui").setup({
+        binary = "gitui",
+        args = {},
+        window = {
+          options = {
+            width = 90,
+            height = 80,
+            border = "rounded",
+          },
+        },
+      })
+    end,
+  },
+
   -- Debug stack (nvim-dap + dap-ui + dap-python + virtual-text + vscodium.nvim
   -- + mason-tool-installer for debugpy) lives in plugins/debug.lua so it can
   -- be loaded with `{ import = "plugins.debug" }` from init.lua.

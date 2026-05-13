@@ -27,6 +27,7 @@
 - **Debugging**: [nvim-dap](https://github.com/mfussenegger/nvim-dap) with [dap-ui](https://github.com/rcarriga/nvim-dap-ui), virtual-text values, and [debugpy](https://github.com/microsoft/debugpy) for Python — driveable from the [`guyide`](https://github.com/guysoft/guyide-cli) CLI via [vscodium.nvim](https://github.com/guysoft/vscodium.nvim)'s `nvim-launch.debug-rpc`
 - **Git Integration**: [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) for git status in buffer
 - **Git Client**: [Neogit](https://github.com/NeogitOrg/neogit) for git operations
+- **Git TUI**: [gitui.nvim](https://github.com/aspeddro/gitui.nvim) — opens [gitui](https://github.com/extrawurst/gitui) in a floating window (optional, requires `gitui` binary)
 - **File Explorer**: Enhanced Neo-tree
 - **Terminal**: [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim) for integrated terminal
 - **Sessions**: [Persistence.nvim](https://github.com/olimorris/persisted.nvim) for session management
@@ -237,6 +238,7 @@ The configuration is modular and easy to customize:
 ### Git
 - [Gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) - Git signs
 - [Neogit](https://github.com/NeogitOrg/neogit) - Git client
+- [gitui.nvim](https://github.com/aspeddro/gitui.nvim) - Gitui TUI in floating window
 - [Diffview.nvim](https://github.com/sindrets/diffview.nvim) - Diff viewer
 - [Git-blame.nvim](https://github.com/f-person/git-blame.nvim) - Git blamer
 
