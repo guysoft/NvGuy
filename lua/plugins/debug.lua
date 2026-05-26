@@ -49,6 +49,22 @@ return {
     opts = { commented = true },
   },
 
+  -- Go adapter glue (delve via dap-go).
+  --
+  -- Wraps `dlv` (must be on PATH; install with `go install
+  -- github.com/go-delve/delve/cmd/dlv@latest` or `brew install delve`).
+  -- Registers `dap.adapters.go` and the default Go configurations so
+  -- launch.json files with type="go" work out of the box from guyide
+  -- debug start.
+  {
+    "leoluz/nvim-dap-go",
+    dependencies = { "mfussenegger/nvim-dap" },
+    ft = "go",
+    config = function()
+      require("dap-go").setup()
+    end,
+  },
+
   -- Python adapter glue (debugpy).
   --
   -- Resolution order:
