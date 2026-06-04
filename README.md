@@ -18,6 +18,9 @@
 - **File Tree**: [Neo-tree](https://github.com/nvim-neo-tree/neo-tree.nvim) with enhanced navigation
 - **Syntax Highlighting**: Treesitter-powered highlighting for 100+ languages
 - **Indentation**: Visual indentation guides with [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim)
+- **Markdown Rendering**: [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) — styled heading bars, code block backgrounds, bullet glyphs, table borders, and checkboxes rendered directly in the buffer (GitHub-preview feel)
+- **Inline Images**: [image.nvim](https://github.com/3rd/image.nvim) — renders images inline in Markdown/Quarto/Norg buffers via the Kitty Graphics Protocol (requires kitty/Ghostty + ImageMagick)
+- **Smooth Scrolling**: [vim-smoothie](https://github.com/psliwka/vim-smoothie) — animated `<C-d>/<C-u>` and mouse-wheel scrolling
 
 ### 🛠️ Development
 - **LSP**: Native LSP with [mason.nvim](https://github.com/williamboman/mason.nvim) for language servers
@@ -31,6 +34,18 @@
 - **File Explorer**: Enhanced Neo-tree
 - **Terminal**: [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim) for integrated terminal
 - **Sessions**: [Persistence.nvim](https://github.com/olimorris/persisted.nvim) for session management
+- **Mouse Navigation**: `Ctrl+click` → LSP go-to-definition; `Ctrl+right-click` / side mouse buttons → jumplist back/forward
+
+### 🌐 Language Support
+
+Language-specific LSP and formatting is configured in `lua/configs/langs.lua`. Each toolchain is **opt-in via executable detection** — if the binary isn't on your `PATH` the block is silently skipped, so NvGuy stays lean on machines that don't need it.
+
+| Language | LSP | Formatter | Status |
+|----------|-----|-----------|--------|
+| Go | [gopls](https://pkg.go.dev/golang.org/x/tools/gopls) (gofumpt, staticcheck, inlay hints) | gofumpt + goimports | Working |
+| Python | [basedpyright](https://github.com/DetachHead/basedpyright) + [ruff](https://github.com/astral-sh/ruff) | ruff (import-sort + format) | Working |
+
+Want support for another language? [Open an issue](https://github.com/guysoft/NvGuy/issues) and we'll add it.
 
 ### 🚀 Productivity
 - **Fuzzy Finder**: [Telescope](https://github.com/nvim-telescope/telescope.nvim) with multiple picker extensions
