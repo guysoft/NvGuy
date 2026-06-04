@@ -114,8 +114,19 @@ return {
           winblend = 50,
         },
       }
+      -- Skip mini.map on filetypes that render inline images — the minimap's
+      -- floating window overlaps with image.nvim's placements and causes
+      -- continuous redraw/flicker. Markdown/quarto/norg are image-heavy.
+      local image_filetypes = {
+        markdown = true, quarto = true, vimwiki = true, norg = true,
+      }
       vim.api.nvim_create_autocmd("BufEnter", {
-        callback = function()
+        callback = function(ev)
+          local ft = vim.bo[ev.buf].filetype
+          if image_filetypes[ft] then
+            pcall(map.close)
+            return
+          end
           pcall(map.open)
         end,
       })
@@ -210,6 +221,113 @@ return {
           },
         },
       })
+    end,
+  },
+
+  -- Rich text rendering for markdown buffers: heading bars + icons, code
+  -- block backgrounds, bullet glyphs, table borders, checkboxes, callouts.
+  -- This is what makes nvim feel "GitHub-preview" in combination with
+  -- image.nvim below.
+  -- Requires: tree-sitter parsers for markdown + markdown_inline + html
+  -- (mason / TSInstall handles them).
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+    ft = { "markdown", "quarto", "norg" },
+    opts = {
+      file_types = { "markdown", "quarto" },
+      heading = {
+        sign = true,
+        position = "overlay",
+        icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+        width = "block",
+        left_pad = 1,
+        right_pad = 4,
+      },
+      code = {
+        style = "full",
+        border = "thick",
+        language_pad = 2,
+        position = "left",
+        width = "block",
+        right_pad = 4,
+      },
+      bullet = { right_pad = 1 },
+      checkbox = {
+        unchecked = { icon = "󰄱 " },
+        checked = { icon = "󰄵 " },
+      },
+      pipe_table = { style = "full" },
+      link = {
+        enabled = true,
+        image = "󰥶 ",
+        hyperlink = "󰌹 ",
+      },
+      quote = { repeat_linebreak = true },
+    },
+  },
+
+  -- Inline images in Markdown via the Kitty Graphics Protocol.
+  -- Pinned to Unicode-placeholders mode so scrolling/splits/floats stay
+  -- sane (the default direct-placement mode has the well-known glitches).
+  -- Requires:
+  --   * kitty terminal (or Ghostty)
+  --   * ImageMagick on PATH (`brew install imagemagick`)
+  --   * tmux: `set -g allow-passthrough on` in ~/.tmux.conf
+  {
+    "3rd/image.nvim",
+    build = false, -- skip the luarocks build; we use magick_cli
+    ft = { "markdown", "quarto", "norg" },
+    opts = {
+      backend = "kitty",
+      processor = "magick_cli",
+      kitty_method = "unicode-placeholders",
+      -- Smaller footprint so the virt_lines reservation matches the painted
+      -- image more closely, and so we don't fight Claude Code in the top pane.
+      max_width_window_percentage = 60,
+      max_height_window_percentage = 25,
+      -- Hide images when the nvim pane isn't focused (we're in a tmux split).
+      editor_only_render_when_focused = true,
+      tmux_show_only_in_active_window = true,
+      window_overlap_clear_enabled = true,
+      -- mini.map's minimap window is in the ignore list as belt+braces; the
+      -- BufEnter hook in mini.map's spec also closes it on markdown buffers.
+      window_overlap_clear_ft_ignore = {
+        "cmp_menu", "cmp_docs", "snacks_notif", "scrollview", "scrollview_sign",
+        "minimap", "MiniMap",
+      },
+      integrations = {
+        markdown = {
+          enabled = true,
+          clear_in_insert_mode = false,          -- keep images visible while editing
+          download_remote_images = true,
+          only_render_image_at_cursor = false,   -- render ALL images at once (GitHub-preview vibe)
+          filetypes = { "markdown", "vimwiki", "quarto" },
+        },
+        neorg = { enabled = true, filetypes = { "norg" } },
+        html = { enabled = false },
+        css = { enabled = false },
+      },
+      hijack_file_patterns = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp", "*.avif" },
+    },
+  },
+
+  -- Smooth scrolling for <C-d>, <C-u>, <C-f>, <C-b>, zz, etc.
+  {
+    "psliwka/vim-smoothie",
+    event = "VeryLazy",
+    config = function()
+      vim.g.smoothie_speed_constant_factor = 10
+      vim.g.smoothie_speed_linear_factor   = 13
+      vim.keymap.set({ "n", "v" }, "<ScrollWheelDown>",
+        [[<cmd>call smoothie#do("\<lt>C-E>")<CR>]],
+        { silent = true, desc = "Smooth scroll down (wheel)" })
+      vim.keymap.set({ "n", "v" }, "<ScrollWheelUp>",
+        [[<cmd>call smoothie#do("\<lt>C-Y>")<CR>]],
+        { silent = true, desc = "Smooth scroll up (wheel)" })
     end,
   },
 
